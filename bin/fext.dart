@@ -6,7 +6,7 @@ void main(List<String> arguments) {
   _run(formatter);
 }
 
-Future<void> _run(ArgumentsFormatters formatter) async {
+void _run(ArgumentsFormatters formatter) {
   CommandsRunner runner = CommandsRunner(
     parameters: formatter.parameters,
     flags: formatter.flags,
