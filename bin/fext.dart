@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'src/arguments_formatters.dart';
 import 'src/commands.dart';
 
