@@ -5,7 +5,10 @@ class CommandsRunner {
   final List<String> parameters;
   final List<String> flags;
 
-  final shell = Shell();
+  final shell = Shell(
+    commandVerbose: false,
+    verbose: false,
+  );
   final _clean = 'flutter clean';
   final _pubGet = 'flutter pub get';
 
