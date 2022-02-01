@@ -33,16 +33,13 @@ class CommandsRunner {
   }
 
   Future<void> mobxBuild() async {
-    if (!flutter) {
-      print('Run it on a flutter project');
-      return;
-    }
-
     final _build = 'flutter pub run build_runner build --delete-conflicting-outputs';
 
     try {
       print('Building mobx...');
-      await shell.run('$_clean;$_pubGet;$_build');
+      await shell.run(_clean);
+      await shell.run(_pubGet);
+      await shell.run(_build);
       print('Building mobx... Done!');
     } catch (e) {
       print('Error building mobx: $e');
@@ -50,30 +47,23 @@ class CommandsRunner {
   }
 
   Future<void> mobxWatch() async {
-    if (!flutter) {
-      print('Run it on a flutter project');
-      return;
-    }
-
     final _build = 'flutter pub run build_runner watch --delete-conflicting-outputs';
 
     try {
       print('Watching mobx...');
-      await shell.run('$_clean;$_pubGet;$_build');
+      await shell.run(_clean);
+      await shell.run(_pubGet);
+      await shell.run(_build);
     } catch (e) {
       print('Error watching mobx: $e');
     }
   }
 
   Future<void> clean() async {
-    if (!flutter) {
-      print('Run it on a flutter project');
-      return;
-    }
-
     try {
       print('Cleaning...');
-      await shell.run('$_clean;$_pubGet');
+      await shell.run(_clean);
+      await shell.run(_pubGet);
       print('Cleaning done!');
     } catch (e) {
       print('Error: $e');

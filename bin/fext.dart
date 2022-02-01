@@ -28,10 +28,10 @@ void _run(ArgumentsFormatters formatter) {
       runner.clean();
       break;
     case 'build':
-      runner.clean();
+      runner.mobxBuild();
       break;
     case 'watch':
-      runner.clean();
+      runner.mobxWatch();
       break;
     default:
       runner.version();
