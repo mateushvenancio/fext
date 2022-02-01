@@ -1,44 +1,40 @@
 import 'dart:io';
-import 'package:process_run/shell.dart';
+import 'src/arguments_formatters.dart';
+import 'src/commands.dart';
 
 void main(List<String> arguments) {
-  if (arguments.isEmpty) {
-    print('Version: 1.0.0');
-    return;
-  }
-
-  String command = arguments.first;
-
-  try {
-    if (command == 'add') {
-      _installPackages(arguments.sublist(1));
-    }
-  } catch (e) {
-    print('Error catch: $e');
-  }
+  ArgumentsFormatters formatter = ArgumentsFormatters(arguments);
+  _run(formatter);
 }
 
-Future<void> _installPackages(List<String> packages) async {
-  Directory dir = Directory(Directory.current.path + '\\pubspec.yaml');
+Future<void> _run(ArgumentsFormatters formatter) async {
+  CommandsRunner runner = CommandsRunner(
+    parameters: formatter.parameters,
+    flags: formatter.flags,
+  );
 
-  if (!File(dir.path).existsSync()) {
+  if (!runner.flutter) {
     print('Run it on a flutter project');
     return;
   }
 
-  final shell = Shell();
-
-  bool _dev = packages.contains('-d');
-
-  for (String pkg in packages) {
-    try {
-      if (_dev) {
-        await shell.run('flutter pub add $pkg --dev');
-      } else {
-        await shell.run('flutter pub add $pkg');
-      }
-    } catch (e) {
-      print('Erro: $e');
-    }
+  switch (formatter.command) {
+    case 'teste':
+      runner.testando();
+      break;
+    case 'add':
+      runner.installPackages();
+      break;
+    case 'clean':
+      runner.clean();
+      break;
+    case 'build':
+      runner.clean();
+      break;
+    case 'watch':
+      runner.clean();
+      break;
+    default:
+      runner.version();
   }
 }
