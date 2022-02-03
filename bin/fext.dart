@@ -33,6 +33,9 @@ void _run(ArgumentsFormatters formatter) {
     case 'watch':
       runner.mobxWatch();
       break;
+    case 'apk':
+      runner.generateApk();
+      break;
     default:
       runner.version();
   }

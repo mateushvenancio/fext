@@ -69,4 +69,18 @@ class CommandsRunner {
       print('Error: $e');
     }
   }
+
+  Future<void> generateApk() async {
+    try {
+      print('Cleaning...');
+      await shell.run(_clean);
+      await shell.run(_pubGet);
+      print('Cleaning done!');
+      print('Generating apk...');
+      await shell.run('flutter build apk');
+      print('Apk generated!');
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 }
