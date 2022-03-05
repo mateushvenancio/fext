@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'package:process_run/shell.dart';
 
+import 'logger.dart';
+
 class CommandsRunner {
   final List<String> parameters;
   final List<String> flags;
+
+  final logger = Logger();
 
   final shell = Shell(
     commandVerbose: false,
@@ -19,15 +23,15 @@ class CommandsRunner {
     return File(dir.path).existsSync();
   }
 
-  void testando() => print('Testando\nParametros: $parameters\nFlags: $flags');
+  void testando() => logger.log('Testando\nParametros: $parameters\nFlags: $flags');
 
-  void version() => print('Version 1.0.0 - Made by MateusV');
+  void version() => logger.log('Version 1.0.0 - Made by MateusV');
 
   Future<void> installPackages() async {
     final dev = flags.contains('-d');
 
     for (var parameter in parameters) {
-      print('Installing $parameter...');
+      logger.log('Installing $parameter...');
       await shell.run('flutter pub add $parameter ${dev ? '--dev' : ''}');
     }
   }
@@ -36,13 +40,13 @@ class CommandsRunner {
     final _build = 'flutter pub run build_runner build --delete-conflicting-outputs';
 
     try {
-      print('Building mobx...');
+      logger.log('Building mobx...');
       await shell.run(_clean);
       await shell.run(_pubGet);
       await shell.run(_build);
-      print('Building mobx... Done!');
+      logger.log('Building mobx... Done!');
     } catch (e) {
-      print('Error building mobx: $e');
+      logger.log('Error building mobx: $e', Level.error);
     }
   }
 
@@ -50,37 +54,37 @@ class CommandsRunner {
     final _build = 'flutter pub run build_runner watch --delete-conflicting-outputs';
 
     try {
-      print('Watching mobx...');
+      logger.log('Watching mobx...');
       await shell.run(_clean);
       await shell.run(_pubGet);
       await shell.run(_build);
     } catch (e) {
-      print('Error watching mobx: $e');
+      logger.log('Error watching mobx: $e', Level.error);
     }
   }
 
   Future<void> clean() async {
     try {
-      print('Cleaning...');
+      logger.log('Cleaning...');
       await shell.run(_clean);
       await shell.run(_pubGet);
-      print('Cleaning done!');
+      logger.log('Cleaning done!');
     } catch (e) {
-      print('Error: $e');
+      logger.log('Error: $e', Level.error);
     }
   }
 
   Future<void> generateApk() async {
     try {
-      print('Cleaning...');
+      logger.log('Cleaning...');
       await shell.run(_clean);
       await shell.run(_pubGet);
-      print('Cleaning done!');
-      print('Generating apk...');
+      logger.log('Cleaning done!');
+      logger.log('Generating apk...');
       await shell.run('flutter build apk');
-      print('Apk generated!');
+      logger.log('Apk generated! Output: build\\app\\outputs\\flutter-apk\\app-release.apk');
     } catch (e) {
-      print('Error: $e');
+      logger.log('Error: $e', Level.error);
     }
   }
 }

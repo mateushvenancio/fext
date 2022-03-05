@@ -1,5 +1,6 @@
 import 'src/arguments_formatters.dart';
 import 'src/commands.dart';
+import 'src/logger.dart';
 
 void main(List<String> arguments) {
   ArgumentsFormatters formatter = ArgumentsFormatters(arguments);
