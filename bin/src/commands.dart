@@ -46,7 +46,7 @@ class CommandsRunner {
       await shell.run(_build);
       logger.log('Building mobx... Done!');
     } catch (e) {
-      logger.log('Error building mobx: $e', Level.error);
+      logger.log('Error building mobx: $e', level: Level.error);
     }
   }
 
@@ -59,7 +59,7 @@ class CommandsRunner {
       await shell.run(_pubGet);
       await shell.run(_build);
     } catch (e) {
-      logger.log('Error watching mobx: $e', Level.error);
+      logger.log('Error watching mobx: $e', level: Level.error);
     }
   }
 
@@ -68,9 +68,9 @@ class CommandsRunner {
       logger.log('Cleaning...');
       await shell.run(_clean);
       await shell.run(_pubGet);
-      logger.log('Cleaning done!');
+      logger.log('Cleaning... done!', erasePrevLine: true);
     } catch (e) {
-      logger.log('Error: $e', Level.error);
+      logger.log('Error: $e', level: Level.error);
     }
   }
 
@@ -79,12 +79,16 @@ class CommandsRunner {
       logger.log('Cleaning...');
       await shell.run(_clean);
       await shell.run(_pubGet);
-      logger.log('Cleaning done!');
+      logger.log('Cleaning... done!', erasePrevLine: true);
       logger.log('Generating apk...');
       await shell.run('flutter build apk');
-      logger.log('Apk generated! Output: build\\app\\outputs\\flutter-apk\\app-release.apk');
+      logger.log(
+        'Generating apk... '
+        'Apk generated! Output: build\\app\\outputs\\flutter-apk\\app-release.apk',
+        erasePrevLine: true,
+      );
     } catch (e) {
-      logger.log('Error: $e', Level.error);
+      logger.log('Error: $e', level: Level.error);
     }
   }
 }
